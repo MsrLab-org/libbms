@@ -50,8 +50,10 @@ namespace Bms {
         BmsBeatmap();
     public:
         friend std::istream &operator>>(std::istream &in, SelfType &beatmap);
-        friend std::ostream &operator<<(std::ostream &out, SelfType &beatmap);
-        std::string StringValue() const;
+        friend std::ostream &operator<<(std::ostream &out, const SelfType &beatmap);
+    public:
+        void SortMainData();
+        void ConvertMainDataToLongNoteType(BmsLongNoteType type, bool sorted = false) throw(BmsException);
     public:
         // Header field
         BmsGameMode GameMode = BmsGameMode::SinglePlay; // #PLAYER
@@ -59,6 +61,7 @@ namespace Bms {
         std::string Title = ""; // #TITLE
         std::string Subtitle = ""; // #SUBTITLE
         std::string Artist = ""; // #ARTIST
+        std::string Subartist = ""; // #SUBARTIST
         double Bpm = 0; // #BPM
         intmax_t Level = 0; // PLAYLEVEL
         BmsJudgmentDifficulty JudgmentDifficulty = BmsJudgmentDifficulty::Easy; // #RANK

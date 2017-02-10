@@ -3,10 +3,10 @@
 namespace Bms {
 
     BmsException::BmsException(const std::string &description)
-    : Desc(description) {}
+    : _Description(description) {}
 
-    const std::string &BmsException::Description() {
-        return Desc;
+    const std::string &BmsException::Description() const {
+        return _Description;
     }
 
 }

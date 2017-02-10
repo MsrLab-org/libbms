@@ -3,9 +3,11 @@
 #define LIBBMS_BMS_INTEGER_LIST_DATA_UNIT_HPP_INCLUDED
 
 #include <cstdint>
+#include <string>
 #include <vector>
 
 #include "BmsDataUnit.hpp"
+#include "BmsException.hpp"
 
 namespace Bms {
 
@@ -16,6 +18,8 @@ namespace Bms {
         using ValueType = std::vector<uint8_t>;
     public:
         BmsIntegerListDataUnit(const IdType &id);
+    public:
+        void SetValue(const std::string &value) throw(BmsException);
     public:
         ~BmsIntegerListDataUnit();
     public:

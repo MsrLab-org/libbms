@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <iostream>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 #include "BmsException.hpp"
@@ -13,7 +14,7 @@ namespace Bms {
 
     enum class BmsChannelId: uint8_t {
         Bgm = 1,
-        Beat = 2,
+        Beat = 2, // Beat provided by decimal number, Double, >0
         Bpm1 = 3, // BPM provided by raw number, Int, Hex, 0~FF
         Bga = 4,
         MissHint = 6,
@@ -70,13 +71,17 @@ namespace Bms {
         ScratchLong = ScratchLong_2P
     };
 
-    std::string ConvertToStringValue(const BmsChannelId &id);
-    BmsChannelId ConvertToBmsChannelId(const std::string &value) throw(BmsException);
+    std::string ConvertToStringValue(BmsChannelId);
+    BmsChannelId ConvertToBmsChannelId(std::string value) throw(BmsException);
 
-    std::vector<BmsChannelId> GetBmsChannels(const uint8_t &keyCount, const bool &longNote, const bool &player1 = true, const bool &iBmscStyle = false);
+    const type_info &DataUnitTypeOfChannel(BmsChannelId id);
+    std::vector<BmsChannelId> GetBmsChannels(uint8_t keyCount, bool longNote, bool player1 = true, bool o2Style = false);
+    bool IsShortNoteKeyChannel(BmsChannelId id);
+    bool IsLongNoteKeyChannel(BmsChannelId id);
+    bool IsKeyChannel(BmsChannelId id);
 
     std::istream &operator>>(std::istream &in, BmsChannelId &id) throw(BmsException);
-    std::ostream &operator<<(std::ostream &out, const BmsChannelId &id);
+    std::ostream &operator<<(std::ostream &out, BmsChannelId id);
 
 }
 

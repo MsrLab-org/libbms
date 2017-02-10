@@ -7,7 +7,7 @@
 #include <string>
 
 #include "BmsException.hpp"
-#include "Detail/Utilities.hpp"
+#include "_Detail/Utilities.hpp"
 
 namespace Bms {
 
@@ -32,7 +32,7 @@ namespace Bms {
                 std::to_string(minValue) + ", " +
                 std::to_string(maxValue) + "])");
         }
-        Value = value;
+        _Value = value;
         return *this;
     }
 
@@ -54,40 +54,40 @@ namespace Bms {
                 ", expect [" + Min().StringValue() +
                 ", " + Max().StringValue() + "])");
         }
-        Value = 0;
+        _Value = 0;
         for (auto c : str) {
-            Value *= 36;
+            _Value *= 36;
             if (c >= '0' && c <= '9') {
-                Value += c - '0';
+                _Value += c - '0';
             } else {
-                Value += c - 'A' + 10;
+                _Value += c - 'A' + 10;
             }
         }
         return *this;
     }
 
     bool operator==(const BmsReferenceId &lhs, const BmsReferenceId &rhs) {
-        return lhs.Value == rhs.Value;
+        return lhs._Value == rhs._Value;
     }
 
     bool operator!=(const BmsReferenceId &lhs, const BmsReferenceId &rhs) {
-        return lhs.Value != rhs.Value;
+        return lhs._Value != rhs._Value;
     }
 
     bool operator<(const BmsReferenceId &lhs, const BmsReferenceId &rhs) {
-        return lhs.Value < rhs.Value;
+        return lhs._Value < rhs._Value;
     }
 
     bool operator<=(const BmsReferenceId &lhs, const BmsReferenceId &rhs) {
-        return lhs.Value <= rhs.Value;
+        return lhs._Value <= rhs._Value;
     }
 
     bool operator>(const BmsReferenceId &lhs, const BmsReferenceId &rhs) {
-        return lhs.Value > rhs.Value;
+        return lhs._Value > rhs._Value;
     }
 
     bool operator>=(const BmsReferenceId &lhs, const BmsReferenceId &rhs) {
-        return lhs.Value >= rhs.Value;
+        return lhs._Value >= rhs._Value;
     }
 
     std::istream &operator>>(std::istream &in, BmsReferenceId &id) throw(BmsException) {
@@ -103,24 +103,34 @@ namespace Bms {
 
     BmsReferenceId BmsReferenceId::Min() {
         SelfType instance;
-        instance.Value = 0; // 00, Placeholder
-        return std::move(instance);
+        instance._Value = 0; // 00, Placeholder
+        return instance;
     }
 
     BmsReferenceId BmsReferenceId::Max() {
         SelfType instance;
-        instance.Value = 1295; // ZZ
-        return std::move(instance);
+        instance._Value = 1295; // ZZ
+        return instance;
+    }
+
+    BmsReferenceId BmsReferenceId::Placeholder() {
+        SelfType instance;
+        instance._Value = 0; // 00, Placeholder
+        return instance;
+    }
+
+    bool BmsReferenceId::IsPlaceholder() const {
+        return _Value == 0;
     }
 
     BmsReferenceId::UnderlyingType BmsReferenceId::UnderlyingValue() const {
-        return Value;
+        return _Value;
     }
 
     std::string BmsReferenceId::StringValue() const {
         char buffer[] = "00";
-        buffer[0] += Value / 36;
-        buffer[1] += Value % 36;
+        buffer[0] += _Value / 36;
+        buffer[1] += _Value % 36;
         for (auto *p = buffer; *p != '\0'; ++p) {
             auto &c = *p;
             if (c > '9') {

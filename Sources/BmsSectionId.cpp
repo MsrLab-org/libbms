@@ -6,7 +6,7 @@
 #include <string>
 
 #include "BmsException.hpp"
-#include "Detail/Utilities.hpp"
+#include "_Detail/Utilities.hpp"
 
 namespace Bms {
 
@@ -98,13 +98,13 @@ namespace Bms {
     BmsSectionId BmsSectionId::Min() {
         SelfType instance;
         instance.Value = 0; // 000
-        return std::move(instance);
+        return instance;
     }
 
     BmsSectionId BmsSectionId::Max() {
         SelfType instance;
         instance.Value = 999; // 999
-        return std::move(instance);
+        return instance;
     }
 
     BmsSectionId::UnderlyingType BmsSectionId::UnderlyingValue() const {

@@ -10,9 +10,9 @@ namespace Bms {
     public:
         BmsException(const std::string &description);
     public:
-        const std::string &Description();
+        const std::string &Description() const;
     private:
-        std::string Desc;
+        std::string _Description;
     };
 
 }

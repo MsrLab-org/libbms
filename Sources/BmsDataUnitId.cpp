@@ -7,7 +7,7 @@
 #include <string>
 
 #include "BmsException.hpp"
-#include "Detail/Utilities.hpp"
+#include "_Detail/Utilities.hpp"
 
 namespace Bms {
 
@@ -73,7 +73,7 @@ namespace Bms {
         return in;
     }
 
-    std::ostream &operator<<(std::ostream &out, const BmsDataUnitId &id) throw(BmsException) {
+    std::ostream &operator<<(std::ostream &out, const BmsDataUnitId &id) {
         out << id.Section << id.Channel;
         return out;
     }

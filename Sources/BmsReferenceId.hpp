@@ -32,10 +32,12 @@ namespace Bms {
     public:
         static SelfType Min(); // 0, 00, Placeholder
         static SelfType Max(); // 1295, ZZ
+        static SelfType Placeholder(); // 0, 00, Placeholder
+        bool IsPlaceholder() const;
         UnderlyingType UnderlyingValue() const;
         std::string StringValue() const;
     private:
-        UnderlyingType Value = 1;
+        UnderlyingType _Value = 1;
     };
 
 }
